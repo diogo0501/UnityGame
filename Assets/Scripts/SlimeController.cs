@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SlimeMovement : MonoBehaviour
@@ -7,15 +8,21 @@ public class SlimeMovement : MonoBehaviour
     public float moveSpeed = 2f;
     public float changeDirectionInterval = 2f;
     public float boundaryRadius = 2f;
+
+    public float fovAngle = 90f;
+    public float detectionRadius = 5f;
+    public LayerMask playerLayer;
     private Vector2 initialPosition;
 
     private float timeSinceLastDirectionChange;
     private Vector2 currentDirection;
+    
 
     private void Start()
     {
         initialPosition = transform.position;
         ChooseRandomDirection(); // Set initial random direction
+
     }
 
     private void Update()
@@ -23,6 +30,7 @@ public class SlimeMovement : MonoBehaviour
         Move();
         CheckDirectionChangeTimer();
         ClampPositionToBoundary();
+        CheckPlayerDetection();
     }
 
     private void OnDrawGizmos()
@@ -40,6 +48,13 @@ public class SlimeMovement : MonoBehaviour
         // Draw a wire sphere in the editor to represent the boundary
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, boundaryRadius);
+
+        Vector2 fovLine1 = Quaternion.AngleAxis(fovAngle * 0.5f, transform.forward) * currentDirection;
+        Vector2 fovLine2 = Quaternion.AngleAxis(-fovAngle * 0.5f, transform.forward) * currentDirection;
+
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(transform.position, fovLine1 * detectionRadius);
+        Gizmos.DrawRay(transform.position, fovLine2 * detectionRadius);
     }
 
     private void Move()
@@ -65,7 +80,7 @@ public class SlimeMovement : MonoBehaviour
 
     private void ClampPositionToBoundary()
     {
-        Debug.Log("Clamping position");
+        
         Vector2 currentPosition = transform.position;
 
         // Calculate the vector from the initial position to the slime's current position
@@ -79,6 +94,21 @@ public class SlimeMovement : MonoBehaviour
 
             // Update the slime's position to the clamped position
             transform.position = new Vector2(clampedPosition.x, clampedPosition.y);
+        }
+    }
+    void CheckPlayerDetection()
+    {
+       Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, detectionRadius, playerLayer);
+
+        if (playerCollider != null)
+        {
+            Vector2 directionToPlayer = (playerCollider.transform.position - transform.position).normalized;
+            float angleToPlayer = Vector2.Angle(currentDirection, directionToPlayer);
+
+            if(angleToPlayer <= fovAngle * 0.5f) {
+                Debug.Log("player detected");
+            
+            }
         }
     }
 }
