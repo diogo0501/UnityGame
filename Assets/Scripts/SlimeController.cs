@@ -10,18 +10,20 @@ public class SlimeMovement : MonoBehaviour
     public float boundaryRadius = 2f;
 
     public float fovAngle = 90f;
-    public float detectionRadius = 5f;
+    public float detectionRadius = 10f;
     public LayerMask playerLayer;
     private Vector2 initialPosition;
 
     private float timeSinceLastDirectionChange;
     private Vector2 currentDirection;
-    
+
 
     private void Start()
     {
+
         initialPosition = transform.position;
         ChooseRandomDirection(); // Set initial random direction
+
 
     }
 
@@ -31,7 +33,10 @@ public class SlimeMovement : MonoBehaviour
         CheckDirectionChangeTimer();
         ClampPositionToBoundary();
         CheckPlayerDetection();
+
+
     }
+
 
     private void OnDrawGizmos()
     {
@@ -52,7 +57,7 @@ public class SlimeMovement : MonoBehaviour
         Vector2 fovLine1 = Quaternion.AngleAxis(fovAngle * 0.5f, transform.forward) * currentDirection;
         Vector2 fovLine2 = Quaternion.AngleAxis(-fovAngle * 0.5f, transform.forward) * currentDirection;
 
-        Gizmos.color = Color.yellow;
+        Gizmos.color = Color.white;
         Gizmos.DrawRay(transform.position, fovLine1 * detectionRadius);
         Gizmos.DrawRay(transform.position, fovLine2 * detectionRadius);
     }
@@ -80,7 +85,7 @@ public class SlimeMovement : MonoBehaviour
 
     private void ClampPositionToBoundary()
     {
-        
+
         Vector2 currentPosition = transform.position;
 
         // Calculate the vector from the initial position to the slime's current position
@@ -98,17 +103,19 @@ public class SlimeMovement : MonoBehaviour
     }
     void CheckPlayerDetection()
     {
-       Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, detectionRadius, playerLayer);
+        Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, detectionRadius, playerLayer);
 
         if (playerCollider != null)
         {
             Vector2 directionToPlayer = (playerCollider.transform.position - transform.position).normalized;
             float angleToPlayer = Vector2.Angle(currentDirection, directionToPlayer);
 
-            if(angleToPlayer <= fovAngle * 0.5f) {
+            if (angleToPlayer <= fovAngle * 0.5f)
+            {
                 Debug.Log("player detected");
-            
+
             }
         }
     }
+
 }
