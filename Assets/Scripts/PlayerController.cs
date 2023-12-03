@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour
     {
         _playerRigidbody2D = GetComponent<Rigidbody2D>();
         _player_Animator = GetComponent<Animator>();
-        walkingPoints = 10;
+        walkingPoints = 100;
         walkingPointsTransform = transform.Find("WalkingPoints");
         uiManager = FindObjectOfType<UIManager>();
         Debug.Log("Walking Points: " + walkingPoints);
