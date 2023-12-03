@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class SlimeMovement : MonoBehaviour
@@ -24,7 +25,6 @@ public class SlimeMovement : MonoBehaviour
         initialPosition = transform.position;
         ChooseRandomDirection(); // Set initial random direction
 
-
     }
 
     private void Update()
@@ -33,7 +33,6 @@ public class SlimeMovement : MonoBehaviour
         CheckDirectionChangeTimer();
         ClampPositionToBoundary();
         CheckPlayerDetection();
-
 
     }
 
@@ -51,8 +50,8 @@ public class SlimeMovement : MonoBehaviour
     private void DrawGizmos()
     {
         // Draw a wire sphere in the editor to represent the boundary
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, boundaryRadius);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawWireSphere(transform.position, boundaryRadius);
 
         Vector2 fovLine1 = Quaternion.AngleAxis(fovAngle * 0.5f, transform.forward) * currentDirection;
         Vector2 fovLine2 = Quaternion.AngleAxis(-fovAngle * 0.5f, transform.forward) * currentDirection;
@@ -66,7 +65,6 @@ public class SlimeMovement : MonoBehaviour
     {
         transform.Translate(currentDirection * moveSpeed * Time.deltaTime);
     }
-
     private void CheckDirectionChangeTimer()
     {
         timeSinceLastDirectionChange += Time.deltaTime;
@@ -103,16 +101,26 @@ public class SlimeMovement : MonoBehaviour
     }
     void CheckPlayerDetection()
     {
-        Collider2D playerCollider = Physics2D.OverlapCircle(transform.position, detectionRadius, playerLayer);
+        float angleIncrement = 0.1f;
 
-        if (playerCollider != null)
+        for (float angle = -fovAngle * 0.5f; angle <= fovAngle * 0.5f; angle += angleIncrement)
         {
-            Vector2 directionToPlayer = (playerCollider.transform.position - transform.position).normalized;
-            float angleToPlayer = Vector2.Angle(currentDirection, directionToPlayer);
+            Vector2 direction = Quaternion.AngleAxis(angle, transform.forward) * currentDirection;
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, detectionRadius, playerLayer);
 
-            if (angleToPlayer <= fovAngle * 0.5f)
+            if (hit.collider != null)
             {
-                Debug.Log("player detected");
+                Debug.Log("Player detected");
+
+                // Draw the ray for visualization
+                Debug.DrawRay(transform.position, direction * detectionRadius, Color.blue);
+
+                // You can add additional logic here for what happens when the player is detected
+            }
+            else
+            {
+                // Draw the ray for visualization (optional)
+                Debug.DrawRay(transform.position, direction * detectionRadius, Color.gray);
 
             }
         }
