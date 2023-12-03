@@ -10,15 +10,18 @@ public class PlayerController : MonoBehaviour
     public float        _playerSpeed;
     private Vector2     _playerDirection;
     private Animator    _player_Animator;
-    private int walkingPoints;
-    private float movementCooldown = 0.5f;
+    public int walkingPoints;
+    public float movementCooldown = 0.5f;
     private float lastMovementTime;
-    
+    public UIManager uiManager;
+    private Transform walkingPointsTransform;
     void Start()
     {
         _playerRigidbody2D = GetComponent<Rigidbody2D>();
         _player_Animator = GetComponent<Animator>();
         walkingPoints = 10;
+        walkingPointsTransform = transform.Find("WalkingPoints");
+        uiManager = FindObjectOfType<UIManager>();
         Debug.Log("Walking Points: " + walkingPoints);
     }
 
@@ -32,6 +35,7 @@ public class PlayerController : MonoBehaviour
             _player_Animator.SetInteger("Movement", 1);
             FlipMovement();
             Debug.Log("Walking Points: " + walkingPoints);
+            walkingPointsTransform.position = transform.position;
         }
         else
         {
@@ -69,11 +73,11 @@ public class PlayerController : MonoBehaviour
     {
         if(_playerDirection.x > 0)
         {
-            transform.eulerAngles = new Vector2(0f, 0f);
+            transform.eulerAngles = new Vector3(1f, 1f, 1f);
         }
         else if(_playerDirection.x < 0)
         {
-            transform.eulerAngles = new Vector2(0f, 180f);
+            transform.eulerAngles = new Vector3(-1f, 1f, 1f);
         }
     }
 }
