@@ -1,7 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,6 +13,16 @@ public class PlayerController : MonoBehaviour
     public float        _playerSpeed;
     private Vector2     _playerDirection;
     private Animator    _player_Animator;
+
+    public SlimeMovement _slimeObj;
+    public SlimeMovement _slime1Obj;
+    public SlimeMovement _slime2Obj;
+
+    public Transform _playerTrans;
+    public Transform _slimeTrans;
+    public Transform _slime1Trans;
+    public Transform _slime2Trans;
+
     public int walkingPoints;
     public float movementCooldown = 0.5f;
     private float lastMovementTime;
@@ -45,6 +58,35 @@ public class PlayerController : MonoBehaviour
         {
             RestartScene();
         }
+        
+    }
+
+    private void checkCloserEnemy()
+    {
+        Dictionary<SlimeMovement, float> distHashMap = new Dictionary<SlimeMovement, float>();
+
+        distHashMap.Add(_slimeObj, Vector3.Distance(_playerTrans.position, _slimeTrans.position));
+        distHashMap.Add(_slime1Obj, Vector3.Distance(_playerTrans.position, _slime1Trans.position));
+        distHashMap.Add(_slime2Obj, Vector3.Distance(_playerTrans.position, _slime2Trans.position));
+
+        // Using Math.Min to find the minimum value
+        float minValue = Math.Min(distHashMap[_slimeObj], Math.Min(distHashMap[_slime1Obj],
+            distHashMap[_slime2Obj]));
+
+        // Iterating through key-value pairs
+        foreach (var kvp in distHashMap)
+        {
+            if(kvp.Value == minValue)
+            {
+                //POF
+                kvp.Key.AddPoint();
+
+                Debug.Log(kvp.Key + " points : " + kvp.Key.GetPoints());
+
+            }
+        }
+
+
     }
     void FixedUpdate()
     {
@@ -68,6 +110,8 @@ public class PlayerController : MonoBehaviour
     void DeductWalkingPoints()
     {      
         walkingPoints--;
+        checkCloserEnemy();
+
     }
     void FlipMovement()
     {

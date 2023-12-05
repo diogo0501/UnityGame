@@ -13,7 +13,9 @@ public class SlimeMovement : MonoBehaviour
     public float fovAngle = 90f;
     public float detectionRadius = 10f;
     public LayerMask playerLayer;
+    public LayerMask testLayer;
     private Vector2 initialPosition;
+    private int points = 0;
 
     private float timeSinceLastDirectionChange;
     private Vector2 currentDirection;
@@ -33,7 +35,6 @@ public class SlimeMovement : MonoBehaviour
         CheckDirectionChangeTimer();
         ClampPositionToBoundary();
         CheckPlayerDetection();
-
     }
 
 
@@ -47,11 +48,21 @@ public class SlimeMovement : MonoBehaviour
         DrawGizmos();
     }
 
+    public void AddPoint()
+    {
+        points++;
+    }
+
+    public int GetPoints()
+    {
+        return points;
+    }
+
     private void DrawGizmos()
     {
         // Draw a wire sphere in the editor to represent the boundary
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(transform.position, boundaryRadius);
+        // Gizmos.color = Color.red;
+        // Gizmos.DrawWireSphere(transform.position, boundaryRadius);
 
         Vector2 fovLine1 = Quaternion.AngleAxis(fovAngle * 0.5f, transform.forward) * currentDirection;
         Vector2 fovLine2 = Quaternion.AngleAxis(-fovAngle * 0.5f, transform.forward) * currentDirection;
@@ -110,7 +121,7 @@ public class SlimeMovement : MonoBehaviour
 
             if (hit.collider != null)
             {
-                Debug.Log("Player detected");
+                //Debug.Log("PLayer Collider");
 
                 // Draw the ray for visualization
                 Debug.DrawRay(transform.position, direction * detectionRadius, Color.blue);
