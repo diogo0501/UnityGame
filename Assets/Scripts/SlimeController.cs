@@ -9,12 +9,17 @@ public class SlimeMovement : MonoBehaviour
     public float moveSpeed = 2f;
     public float changeDirectionInterval = 2f;
     public float boundaryRadius = 2f;
+    private int POINTS_LIMIT = 20;
+
+    // Reference to the object to be removed
+    public GameObject _ownObj;
 
     public float fovAngle = 90f;
     public float detectionRadius = 10f;
     public LayerMask playerLayer;
     public LayerMask testLayer;
     private Vector2 initialPosition;
+    public PlayerController _player;
     private int points = 0;
 
     private float timeSinceLastDirectionChange;
@@ -35,8 +40,18 @@ public class SlimeMovement : MonoBehaviour
         CheckDirectionChangeTimer();
         ClampPositionToBoundary();
         CheckPlayerDetection();
+        CheckPoints();
     }
 
+    private void CheckPoints()
+    {
+        if (points >= POINTS_LIMIT)
+        {
+            _player.AddPoints(points);
+            Destroy(_ownObj);
+        }
+
+    }
 
     private void OnDrawGizmos()
     {
@@ -110,6 +125,7 @@ public class SlimeMovement : MonoBehaviour
             transform.position = new Vector2(clampedPosition.x, clampedPosition.y);
         }
     }
+
     void CheckPlayerDetection()
     {
         float angleIncrement = 0.1f;
@@ -136,5 +152,4 @@ public class SlimeMovement : MonoBehaviour
             }
         }
     }
-
 }

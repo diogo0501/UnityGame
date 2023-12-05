@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -59,6 +60,11 @@ public class PlayerController : MonoBehaviour
             RestartScene();
         }
         
+    }
+
+    public void AddPoints(int points)
+    {
+        walkingPoints += points;
     }
 
     private void checkCloserEnemy()
