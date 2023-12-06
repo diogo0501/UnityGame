@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
 public class SlimeMovement : MonoBehaviour
@@ -24,14 +23,16 @@ public class SlimeMovement : MonoBehaviour
 
     private float timeSinceLastDirectionChange;
     private Vector2 currentDirection;
-
-
+    public Transform fieldOfViewPrefab;
+    private FieldOfView fieldOfViewInstance;
     private void Start()
     {
 
         initialPosition = transform.position;
         ChooseRandomDirection(); // Set initial random direction
-
+        fieldOfViewInstance = Instantiate(fieldOfViewPrefab, null).GetComponent<FieldOfView>();
+        fieldOfViewInstance.SetFoV(fovAngle); // Set the initial FOV value
+        fieldOfViewInstance.SetViewDistance(detectionRadius);
     }
 
     private void Update()
@@ -41,6 +42,8 @@ public class SlimeMovement : MonoBehaviour
         ClampPositionToBoundary();
         CheckPlayerDetection();
         CheckPoints();
+        fieldOfViewInstance.SetOrigin(transform.position);
+        fieldOfViewInstance.SetAimDirection(currentDirection);
     }
 
     private void CheckPoints()
@@ -53,16 +56,6 @@ public class SlimeMovement : MonoBehaviour
 
     }
 
-    private void OnDrawGizmos()
-    {
-        DrawGizmos();
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        DrawGizmos();
-    }
-
     public void AddPoint()
     {
         points++;
@@ -71,20 +64,6 @@ public class SlimeMovement : MonoBehaviour
     public int GetPoints()
     {
         return points;
-    }
-
-    private void DrawGizmos()
-    {
-        // Draw a wire sphere in the editor to represent the boundary
-        // Gizmos.color = Color.red;
-        // Gizmos.DrawWireSphere(transform.position, boundaryRadius);
-
-        Vector2 fovLine1 = Quaternion.AngleAxis(fovAngle * 0.5f, transform.forward) * currentDirection;
-        Vector2 fovLine2 = Quaternion.AngleAxis(-fovAngle * 0.5f, transform.forward) * currentDirection;
-
-        Gizmos.color = Color.white;
-        Gizmos.DrawRay(transform.position, fovLine1 * detectionRadius);
-        Gizmos.DrawRay(transform.position, fovLine2 * detectionRadius);
     }
 
     private void Move()
@@ -126,29 +105,21 @@ public class SlimeMovement : MonoBehaviour
         }
     }
 
-    void CheckPlayerDetection()
+    private void CheckPlayerDetection()
     {
-        float angleIncrement = 0.1f;
+        RaycastHit2D raycastHit2D = Physics2D.Raycast(transform.position, currentDirection, detectionRadius, playerLayer);
 
-        for (float angle = -fovAngle * 0.5f; angle <= fovAngle * 0.5f; angle += angleIncrement)
+        if (raycastHit2D.collider != null)
         {
-            Vector2 direction = Quaternion.AngleAxis(angle, transform.forward) * currentDirection;
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, detectionRadius, playerLayer);
-
-            if (hit.collider != null)
+            // Hit something
+            if (raycastHit2D.collider.gameObject.CompareTag("Player"))
             {
-                //Debug.Log("PLayer Collider");
-
-                // Draw the ray for visualization
-                Debug.DrawRay(transform.position, direction * detectionRadius, Color.blue);
-
-                // You can add additional logic here for what happens when the player is detected
+                // Hit Player
+                Debug.Log("Player detected");
             }
             else
             {
-                // Draw the ray for visualization (optional)
-                Debug.DrawRay(transform.position, direction * detectionRadius, Color.gray);
-
+                // Hit something else
             }
         }
     }

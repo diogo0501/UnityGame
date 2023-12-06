@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour
         walkingPoints = 100;
         walkingPointsTransform = transform.Find("WalkingPoints");
         uiManager = FindObjectOfType<UIManager>();
-        Debug.Log("Walking Points: " + walkingPoints);
+        //Debug.Log("Walking Points: " + walkingPoints);
     }
 
     // Update is called once per frame
@@ -48,7 +48,7 @@ public class PlayerController : MonoBehaviour
         {
             _player_Animator.SetInteger("Movement", 1);
             FlipMovement();
-            Debug.Log("Walking Points: " + walkingPoints);
+            //Debug.Log("Walking Points: " + walkingPoints);
             walkingPointsTransform.position = transform.position;
         }
         else
@@ -87,7 +87,7 @@ public class PlayerController : MonoBehaviour
                 //POF
                 kvp.Key.AddPoint();
 
-                Debug.Log(kvp.Key + " points : " + kvp.Key.GetPoints());
+                //Debug.Log(kvp.Key + " points : " + kvp.Key.GetPoints());
 
             }
         }
