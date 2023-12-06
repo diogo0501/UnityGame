@@ -17,6 +17,7 @@ public class FieldOfView : MonoBehaviour
         fov = 90f;
         viewDistance = 50f;
         origin = Vector3.zero;
+        
     }
 
     private void LateUpdate()

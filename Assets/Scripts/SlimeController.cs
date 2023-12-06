@@ -107,12 +107,17 @@ public class SlimeMovement : MonoBehaviour
 
     private void CheckPlayerDetection()
     {
+        // Check if the player reference is not null
         RaycastHit2D raycastHit2D = Physics2D.Raycast(transform.position, currentDirection, detectionRadius, playerLayer);
 
+        // Draw a debug ray to visualize the raycast
+        Debug.DrawRay(transform.position, currentDirection * detectionRadius, Color.green);
+
+        // Check if the ray hit something
         if (raycastHit2D.collider != null)
         {
-            // Hit something
-            if (raycastHit2D.collider.gameObject.CompareTag("Player"))
+            // Check if the hit object has the "Player" tag
+            if (raycastHit2D.collider.CompareTag("Player"))
             {
                 // Hit Player
                 Debug.Log("Player detected");
@@ -123,4 +128,4 @@ public class SlimeMovement : MonoBehaviour
             }
         }
     }
-}
+    }
