@@ -22,7 +22,7 @@ public class FieldOfView : MonoBehaviour
 
     private void LateUpdate()
     {
-        int rayCount = 360; // Increase for smoother FOV shape
+        int rayCount = 360; 
         float angle = startingAngle;
         float angleIncrease = fov / rayCount;
 
@@ -47,7 +47,7 @@ public class FieldOfView : MonoBehaviour
             else
             {
                 // Hit object
-                vertex = raycastHit2D.point;
+                vertex = raycastHit2D.point;               
             }
             vertices[vertexIndex] = vertex;
 
@@ -68,12 +68,9 @@ public class FieldOfView : MonoBehaviour
         mesh.triangles = triangles;
         mesh.bounds = new Bounds(origin, Vector3.one * 1000f);
     }
+   
     public bool IsPlayerInFOV()
     {
-        Renderer renderer = GetComponent<Renderer>();
-        // Log sorting layer and order
-        Debug.Log($"Sorting Layer: {renderer.sortingLayerName}, Order: {renderer.sortingOrder}");
-
         Vector3[] vertices = mesh.vertices;
 
         // Iterate through the vertices of the mesh
