@@ -51,7 +51,8 @@ public class SlimeMovement : MonoBehaviour
         if (points >= POINTS_LIMIT)
         {
             _player.AddPoints(points);
-            Destroy(_ownObj);
+            points = 0;
+            //Destroy(_ownObj);
         }
 
     }

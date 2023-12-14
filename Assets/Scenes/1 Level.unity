@@ -10030,7 +10030,7 @@ MonoBehaviour:
   testLayer:
     serializedVersion: 2
     m_Bits: 0
-  _player: {fileID: 0}
+  _player: {fileID: 115142553}
   fieldOfViewPrefab: {fileID: 5553507827386462285, guid: 34ead26fb3ec292489e2b4c8a8bc8efa, type: 3}
 --- !u!50 &947013643
 Rigidbody2D:
@@ -20348,7 +20348,7 @@ MonoBehaviour:
   testLayer:
     serializedVersion: 2
     m_Bits: 0
-  _player: {fileID: 0}
+  _player: {fileID: 115142553}
   fieldOfViewPrefab: {fileID: 5553507827386462285, guid: 34ead26fb3ec292489e2b4c8a8bc8efa, type: 3}
 --- !u!1 &2019354129
 GameObject:
@@ -20538,7 +20538,7 @@ MonoBehaviour:
   testLayer:
     serializedVersion: 2
     m_Bits: 0
-  _player: {fileID: 0}
+  _player: {fileID: 115142553}
   fieldOfViewPrefab: {fileID: 5553507827386462285, guid: 34ead26fb3ec292489e2b4c8a8bc8efa, type: 3}
 --- !u!50 &2115688398
 Rigidbody2D:
