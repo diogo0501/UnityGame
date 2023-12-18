@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,7 +12,7 @@ public class PlayerController : MonoBehaviour
 {
 
     private Rigidbody2D _playerRigidbody2D;
-    public float        _playerSpeed;
+    public  float       _playerSpeed;
     private Vector2     _playerDirection;
     private Animator    _player_Animator;
 
@@ -24,6 +25,7 @@ public class PlayerController : MonoBehaviour
     public Transform _slime1Trans;
     public Transform _slime2Trans;
 
+    private static bool created = false;
     public int walkingPoints;
     public float movementCooldown = 0.5f;
     private float lastMovementTime;
@@ -31,6 +33,17 @@ public class PlayerController : MonoBehaviour
     private Transform walkingPointsTransform;
     void Start()
     {
+
+        if (!created)
+        {
+            DontDestroyOnLoad(transform.gameObject);
+            created = true;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         _playerRigidbody2D = GetComponent<Rigidbody2D>();
         _player_Animator = GetComponent<Animator>();
         walkingPoints = 100;

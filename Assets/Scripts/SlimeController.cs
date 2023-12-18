@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class SlimeMovement : MonoBehaviour
 {
@@ -9,6 +11,9 @@ public class SlimeMovement : MonoBehaviour
     public float changeDirectionInterval = 2f;
     public float boundaryRadius = 2f;
     private int POINTS_LIMIT = 20;
+    private float DIFFICULTY = 1.3f;
+    private bool alreadyTriggered = false;
+    private bool created = false;
 
     // Reference to the object to be removed
     public GameObject _ownObj;
@@ -27,6 +32,15 @@ public class SlimeMovement : MonoBehaviour
     private FieldOfView fieldOfViewInstance;
     private void Start()
     {
+        if (!created)
+        {
+            DontDestroyOnLoad(transform.gameObject);
+            created = true;
+        }
+        else
+        {
+            Destroy(transform.gameObject);
+        }
 
         initialPosition = transform.position;
         ChooseRandomDirection(); // Set initial random direction
@@ -52,6 +66,12 @@ public class SlimeMovement : MonoBehaviour
         {
             _player.AddPoints(points);
             points = 0;
+            if (!alreadyTriggered)
+            {
+                fovAngle = fovAngle * DIFFICULTY;
+                fieldOfViewInstance.SetFoV(fovAngle);
+                alreadyTriggered = true;
+            }
             //Destroy(_ownObj);
         }
 
