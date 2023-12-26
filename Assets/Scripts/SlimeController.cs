@@ -32,21 +32,27 @@ public class SlimeMovement : MonoBehaviour
     private FieldOfView fieldOfViewInstance;
     private void Start()
     {
-       /* if (!created)
-        {
-            DontDestroyOnLoad(transform.gameObject);
-            created = true;
-        }
-        else
-        {
-            Destroy(transform.gameObject);
-        }*/
+        /* if (!created)
+         {
+             DontDestroyOnLoad(transform.gameObject);
+             created = true;
+         }
+         else
+         {
+             Destroy(transform.gameObject);
+         }*/
 
+        setPlayer();
         initialPosition = transform.position;
         ChooseRandomDirection(); // Set initial random direction
         fieldOfViewInstance = Instantiate(fieldOfViewPrefab, null).GetComponent<FieldOfView>();
         fieldOfViewInstance.SetFoV(fovAngle); // Set the initial FOV value
         fieldOfViewInstance.SetViewDistance(detectionRadius);
+    }
+
+    private void setPlayer()
+    {
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
     private void Update()
@@ -80,6 +86,7 @@ public class SlimeMovement : MonoBehaviour
     public void AddPoint()
     {
         points++;
+        Debug.Log("Added point");
     }
 
     public int GetPoints()
@@ -131,7 +138,7 @@ public class SlimeMovement : MonoBehaviour
         if (fieldOfViewInstance.IsPlayerInFOV())
         {
             // Player detected
-            Debug.Log("Player detected");
+            //Debug.Log("Player detected");
         }
     }
 }

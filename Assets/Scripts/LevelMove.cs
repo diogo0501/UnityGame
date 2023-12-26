@@ -14,6 +14,7 @@ public class LevelMove : MonoBehaviour
         if (collision.tag == "Player")
         {
             SceneManager.LoadScene(sceneBuildIndex, LoadSceneMode.Single);
+            
         }
     }
     

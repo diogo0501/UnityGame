@@ -681,13 +681,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerSpeed: 4
-  _slimeObj: {fileID: 1992732491}
-  _slime1Obj: {fileID: 947013642}
-  _slime2Obj: {fileID: 2115688397}
-  _playerTrans: {fileID: 115142555}
-  _slimeTrans: {fileID: 1992732488}
-  _slime1Trans: {fileID: 947013647}
-  _slime2Trans: {fileID: 2115688402}
+  slimeObjs: []
+  slimeTrans: []
+  playerTrans: {fileID: 0}
   walkingPoints: 0
   movementCooldown: 0.5
   uiManager: {fileID: 0}
@@ -10001,7 +9997,7 @@ GameObject:
   - component: {fileID: 947013642}
   m_Layer: 0
   m_Name: Slime (1)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20168,7 +20164,7 @@ GameObject:
   - component: {fileID: 1992732491}
   m_Layer: 0
   m_Name: Slime
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20507,7 +20503,7 @@ GameObject:
   - component: {fileID: 2115688397}
   m_Layer: 0
   m_Name: Slime (2)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

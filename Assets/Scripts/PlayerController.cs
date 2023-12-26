@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.Mathematics;
 using Unity.VisualScripting;
+using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -16,14 +17,17 @@ public class PlayerController : MonoBehaviour
     private Vector2     _playerDirection;
     private Animator    _player_Animator;
 
-    public SlimeMovement _slimeObj;
-    public SlimeMovement _slime1Obj;
-    public SlimeMovement _slime2Obj;
+    public SlimeMovement[] slimeObjs;
+    public Transform[]     slimeTrans;
 
-    public Transform _playerTrans;
-    public Transform _slimeTrans;
-    public Transform _slime1Trans;
-    public Transform _slime2Trans;
+    //public SlimeMovement _slimeObj;
+    //public SlimeMovement _slime1Obj;
+    //public SlimeMovement _slime2Obj;
+
+    public Transform playerTrans;
+    //public Transform _slimeTrans;
+    //public Transform _slime1Trans;
+    //public Transform _slime2Trans;
 
     private static bool created = false;
     public int walkingPoints;
@@ -44,12 +48,33 @@ public class PlayerController : MonoBehaviour
             Destroy(gameObject);
         }
 
+        setSlimeObjectsAndTrans();
+        playerTrans = GameObject.FindGameObjectWithTag("Player")
+                                .GetComponent<Transform>();
+
         _playerRigidbody2D = GetComponent<Rigidbody2D>();
         _player_Animator = GetComponent<Animator>();
         walkingPoints = 100;
         walkingPointsTransform = transform.Find("WalkingPoints");
         uiManager = FindObjectOfType<UIManager>();
         //Debug.Log("Walking Points: " + walkingPoints);
+    }
+
+    private void setSlimeObjectsAndTrans()
+    {
+        GameObject[] slimes = GameObject.FindGameObjectsWithTag("Enemy");
+        slimeObjs = new SlimeMovement[slimes.Length];
+        slimeTrans = new Transform[slimes.Length];
+
+        int i = 0;
+        foreach(var slime in slimes)
+        {
+            slimeObjs[i] = slime.GetComponent<SlimeMovement>();
+            slimeTrans[i] = slime.GetComponent<Transform>();
+            i++;
+        }
+
+
     }
 
     // Update is called once per frame
@@ -72,7 +97,12 @@ public class PlayerController : MonoBehaviour
         {
             RestartScene();
         }
-        
+
+        // TO BE REMOVED
+        setSlimeObjectsAndTrans();
+        playerTrans = GameObject.FindGameObjectWithTag("Player")
+                                .GetComponent<Transform>();
+
     }
 
     public void AddPoints(int points)
@@ -84,13 +114,26 @@ public class PlayerController : MonoBehaviour
     {
         Dictionary<SlimeMovement, float> distHashMap = new Dictionary<SlimeMovement, float>();
 
-        distHashMap.Add(_slimeObj, Vector3.Distance(_playerTrans.position, _slimeTrans.position));
-        distHashMap.Add(_slime1Obj, Vector3.Distance(_playerTrans.position, _slime1Trans.position));
-        distHashMap.Add(_slime2Obj, Vector3.Distance(_playerTrans.position, _slime2Trans.position));
+        try
+        {
+            for(int i = 0; i < slimeObjs.Length; i++)
+            {
+                distHashMap.Add(slimeObjs[i], Vector3.Distance(playerTrans.position, slimeTrans[i].position));
+            }
+        }
+        catch(Exception e)
+        {
+            print(e);
+        }
 
-        // Using Math.Min to find the minimum value
-        float minValue = Math.Min(distHashMap[_slimeObj], Math.Min(distHashMap[_slime1Obj],
-            distHashMap[_slime2Obj]));
+        float minValue = float.MaxValue; 
+        foreach (var slime in distHashMap)
+        {
+            if(slime.Value < minValue)
+            {
+                minValue = slime.Value;
+            }
+        }
 
         // Iterating through key-value pairs
         foreach (var kvp in distHashMap)
