@@ -752,7 +752,7 @@ Transform:
   m_GameObject: {fileID: 115142551}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3, y: -5.69, z: 0}
+  m_LocalPosition: {x: -6.57, y: -9.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1947,7 +1947,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3, y: -5.69, z: -10}
+  m_LocalPosition: {x: -6.57, y: -9.6, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10025,7 +10025,6 @@ MonoBehaviour:
   moveSpeed: 3
   changeDirectionInterval: 2
   boundaryRadius: 3
-  _ownObj: {fileID: 0}
   fovAngle: 90
   detectionRadius: 5
   playerLayer:
@@ -19746,7 +19745,7 @@ Transform:
   m_GameObject: {fileID: 1946000104}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3, y: -5.69, z: -10}
+  m_LocalPosition: {x: -6.57, y: -9.6, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20377,7 +20376,6 @@ MonoBehaviour:
   moveSpeed: 3
   changeDirectionInterval: 2
   boundaryRadius: 3
-  _ownObj: {fileID: 0}
   fovAngle: 90
   detectionRadius: 5
   playerLayer:
@@ -20567,7 +20565,6 @@ MonoBehaviour:
   moveSpeed: 3
   changeDirectionInterval: 2
   boundaryRadius: 3
-  _ownObj: {fileID: 0}
   fovAngle: 90
   detectionRadius: 5
   playerLayer:

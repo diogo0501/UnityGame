@@ -16,7 +16,7 @@ public class SlimeMovement : MonoBehaviour
     private bool created = false;
 
     // Reference to the object to be removed
-    public GameObject _ownObj;
+    //public GameObject _ownObj;
 
     public float fovAngle = 90f;
     public float detectionRadius = 10f;
@@ -32,7 +32,7 @@ public class SlimeMovement : MonoBehaviour
     private FieldOfView fieldOfViewInstance;
     private void Start()
     {
-        if (!created)
+       /* if (!created)
         {
             DontDestroyOnLoad(transform.gameObject);
             created = true;
@@ -40,7 +40,7 @@ public class SlimeMovement : MonoBehaviour
         else
         {
             Destroy(transform.gameObject);
-        }
+        }*/
 
         initialPosition = transform.position;
         ChooseRandomDirection(); // Set initial random direction
