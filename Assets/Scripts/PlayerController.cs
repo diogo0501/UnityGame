@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.Mathematics;
 using Unity.VisualScripting;
-using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -30,10 +29,10 @@ public class PlayerController : MonoBehaviour
     //public Transform _slime2Trans;
 
     private static bool created = false;
-    public int walkingPoints;
-    public float movementCooldown = 0.5f;
-    private float lastMovementTime;
-    public UIManager uiManager;
+    public  int       walkingPoints;
+    public  float     movementCooldown = 0.5f;
+    private float     lastMovementTime;
+    public  UIManager uiManager;
     private Transform walkingPointsTransform;
     void Start()
     {
@@ -69,7 +68,7 @@ public class PlayerController : MonoBehaviour
         int i = 0;
         foreach(var slime in slimes)
         {
-            slimeObjs[i] = slime.GetComponent<SlimeMovement>();
+            slimeObjs[i]  = slime.GetComponent<SlimeMovement>();
             slimeTrans[i] = slime.GetComponent<Transform>();
             i++;
         }

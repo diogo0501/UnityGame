@@ -3,51 +3,40 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class SlimeMovement : MonoBehaviour
 {
-    public float moveSpeed = 2f;
-    public float changeDirectionInterval = 2f;
-    public float boundaryRadius = 2f;
-    private int POINTS_LIMIT = 20;
-    private float DIFFICULTY = 1.3f;
-    private bool alreadyTriggered = false;
-    private bool created = false;
-
+    public  float moveSpeed               = 2f;
+    public  float changeDirectionInterval = 2f;
+    public  float boundaryRadius          = 2f;
+    private float DIFFICULTY              = 1.3f;
+    private int   POINTS_LIMIT            = 20;
+    private bool  alreadyTriggered        = false;
+    private bool  created                 = false;
     // Reference to the object to be removed
     //public GameObject _ownObj;
 
-    public float fovAngle = 90f;
-    public float detectionRadius = 10f;
-    public LayerMask playerLayer;
-    public LayerMask testLayer;
-    private Vector2 initialPosition;
+    public float            fovAngle = 90f;
+    public float            detectionRadius = 10f;
+    public LayerMask        playerLayer;
+    public LayerMask        testLayer;
     public PlayerController _player;
-    private int points = 0;
+    private Vector2         initialPosition;
+    private int             points = 0;
 
     private float timeSinceLastDirectionChange;
     private Vector2 currentDirection;
     public Transform fieldOfViewPrefab;
     private FieldOfView fieldOfViewInstance;
+
     private void Start()
     {
-        /* if (!created)
-         {
-             DontDestroyOnLoad(transform.gameObject);
-             created = true;
-         }
-         else
-         {
-             Destroy(transform.gameObject);
-         }*/
-
         setPlayer();
         initialPosition = transform.position;
         ChooseRandomDirection(); // Set initial random direction
-        fieldOfViewInstance = Instantiate(fieldOfViewPrefab, null).GetComponent<FieldOfView>();
-        fieldOfViewInstance.SetFoV(fovAngle); // Set the initial FOV value
-        fieldOfViewInstance.SetViewDistance(detectionRadius);
+        createFov();
     }
 
     private void setPlayer()
@@ -64,6 +53,13 @@ public class SlimeMovement : MonoBehaviour
         CheckPoints();
         fieldOfViewInstance.SetOrigin(transform.position);
         fieldOfViewInstance.SetAimDirection(currentDirection);
+    }
+
+    public void createFov()
+    {
+        fieldOfViewInstance = Instantiate(fieldOfViewPrefab, null).GetComponent<FieldOfView>();
+        fieldOfViewInstance.SetFoV(fovAngle); // Set the initial FOV value
+        fieldOfViewInstance.SetViewDistance(detectionRadius);
     }
 
     private void CheckPoints()
@@ -86,7 +82,7 @@ public class SlimeMovement : MonoBehaviour
     public void AddPoint()
     {
         points++;
-        Debug.Log("Added point");
+        Debug.Log("Points : " + points);
     }
 
     public int GetPoints()

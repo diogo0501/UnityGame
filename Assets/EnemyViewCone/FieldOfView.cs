@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FieldOfView : MonoBehaviour
@@ -10,6 +11,9 @@ public class FieldOfView : MonoBehaviour
     private Vector3 origin;
     private float startingAngle;
 
+    private void Start()
+    {
+    }
     private void Awake()
     {
         mesh = new Mesh();
@@ -82,7 +86,6 @@ public class FieldOfView : MonoBehaviour
             RaycastHit2D hit = Physics2D.Raycast(origin, (vertex - origin).normalized, viewDistance, layerMask);
             if (hit.collider != null && hit.collider.CompareTag("Player"))
             {
-                Debug.DrawRay(origin, (vertex - origin).normalized * viewDistance, Color.blue);
                 return true;
             }
         }
