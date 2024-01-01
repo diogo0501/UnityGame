@@ -634,6 +634,7 @@ GameObject:
   - component: {fileID: 115142552}
   - component: {fileID: 115142556}
   - component: {fileID: 115142557}
+  - component: {fileID: 115142558}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -812,6 +813,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &115142558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115142551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9448e72f7f6b04489b7792385787c33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  index: 0
 --- !u!1 &139905918
 GameObject:
   m_ObjectHideFlags: 0
@@ -2006,7 +2020,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe565ec6817b2f40b1a0a56115ea0bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeathMenu: {fileID: 1601848173}
+  DeathMenu: {fileID: 0}
 --- !u!1 &538462770
 GameObject:
   m_ObjectHideFlags: 0
@@ -2025,7 +2039,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &538462771
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11374,7 +11388,7 @@ GameObject:
   - component: {fileID: 1601848175}
   m_Layer: 5
   m_Name: DeathMenu
-  m_TagString: Untagged
+  m_TagString: Death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11399,7 +11413,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0.00012207031, y: 0.000061035156}
   m_SizeDelta: {x: 0, y: 8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1601848175
@@ -11589,7 +11603,7 @@ GameObject:
   - component: {fileID: 1847811868}
   m_Layer: 0
   m_Name: Barrier
-  m_TagString: Untagged
+  m_TagString: Death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12315,7 +12329,7 @@ GameObject:
   - component: {fileID: 1933899141}
   m_Layer: 5
   m_Name: PauseMenu
-  m_TagString: Untagged
+  m_TagString: Death
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13014,6 +13028,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   _player: {fileID: 115142553}
+  DeathMenu: {fileID: 0}
   fieldOfViewPrefab: {fileID: 5553507827386462285, guid: 34ead26fb3ec292489e2b4c8a8bc8efa, type: 3}
 --- !u!114 &1992732492
 MonoBehaviour:

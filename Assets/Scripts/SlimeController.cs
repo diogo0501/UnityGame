@@ -25,6 +25,8 @@ public class SlimeMovement : MonoBehaviour
     public PlayerController _player;
     private Vector2         initialPosition;
     private int             points = 0;
+    public GameObject DeathMenu;
+    private GameObject Canvas;
 
     private float timeSinceLastDirectionChange;
     private Vector2 currentDirection;
@@ -33,6 +35,13 @@ public class SlimeMovement : MonoBehaviour
 
     private void Start()
     {
+        //DeathMenu = GameObject.FindGameObjectWithTag("Death");
+        //if(DeathMenu == null) { Debug.Log("[INFO] Death Menu is null"); };
+        //if(DeathMenu != null)
+        //{
+        //    DeathMenu.SetActive(false);
+        //    Debug.Log("Falsseeeeee");
+        //}
         setPlayer();
         initialPosition = transform.position;
         ChooseRandomDirection(); // Set initial random direction
@@ -82,7 +91,7 @@ public class SlimeMovement : MonoBehaviour
     public void AddPoint()
     {
         points++;
-        Debug.Log("Points : " + points);
+        //Debug.Log("Points : " + points);
     }
 
     public int GetPoints()
@@ -134,7 +143,20 @@ public class SlimeMovement : MonoBehaviour
         if (fieldOfViewInstance.IsPlayerInFOV())
         {
             // Player detected
-            //Debug.Log("Player detected");
+            Debug.Log("Player detected");
+            DeathMenu.SetActive(true);
+            GameObject[] slimes = GameObject.FindGameObjectsWithTag("Enemy");
+            GameObject player   = GameObject.FindGameObjectWithTag("Player");
+
+            foreach (var slime in slimes)
+            {
+                Destroy(slime);
+            }
+
+            //player.GetComponent<PlayerController>().walkingPoints = 100;
+            //player.GetComponent<Transform>().position = new Vector3(-8, -7, 0);
+            //SceneManager.LoadSceneAsync(1);
+
         }
     }
 }

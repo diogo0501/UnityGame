@@ -34,18 +34,18 @@ public class PlayerController : MonoBehaviour
     private float     lastMovementTime;
     public  UIManager uiManager;
     private Transform walkingPointsTransform;
-    void Start()
+    public void Start()
     {
 
-        if (!created)
-        {
-            DontDestroyOnLoad(transform.gameObject);
-            created = true;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        //if (!created)
+        //{
+        //    DontDestroyOnLoad(transform.gameObject);
+        //    created = true;
+        //}
+        //else
+        //{
+        //    Destroy(gameObject);
+        //}
 
         setSlimeObjectsAndTrans();
         playerTrans = GameObject.FindGameObjectWithTag("Player")
