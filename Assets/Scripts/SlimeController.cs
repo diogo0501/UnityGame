@@ -11,7 +11,7 @@ public class SlimeMovement : MonoBehaviour
     public  float moveSpeed               = 2f;
     public  float changeDirectionInterval = 2f;
     public  float boundaryRadius          = 2f;
-    private float DIFFICULTY              = 1.3f;
+    public  float DIFFICULTY              = 1.3f;
     private int   POINTS_LIMIT            = 20;
     private bool  alreadyTriggered        = false;
     private bool  created                 = false;
