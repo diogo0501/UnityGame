@@ -1980,7 +1980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe565ec6817b2f40b1a0a56115ea0bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DeathMenu: {fileID: 0}
+  DeathMenu: {fileID: 1601848173}
 --- !u!1 &538462770
 GameObject:
   m_ObjectHideFlags: 0
@@ -2443,7 +2443,7 @@ GameObject:
   - component: {fileID: 712831307}
   m_Layer: 0
   m_Name: Barrier (1)
-  m_TagString: Death
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12853,7 +12853,7 @@ GameObject:
   - component: {fileID: 1847811868}
   m_Layer: 0
   m_Name: Barrier
-  m_TagString: Death
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
