@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DontDestroySlime : MonoBehaviour
 {
-    private static int NUMBER_SLIMES = 10;
+    private static int NUMBER_SLIMES = 20;
     public int index;
     private static GameObject[] persistentObjects = new GameObject[NUMBER_SLIMES];
     // Start is called before the first frame update
