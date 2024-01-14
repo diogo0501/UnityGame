@@ -34,7 +34,7 @@ public class PlayerController : MonoBehaviour
     private float     lastMovementTime;
     public  UIManager uiManager;
     private Transform walkingPointsTransform;
-    public void Start()
+    private void Start()
     {
 
         //if (!created)

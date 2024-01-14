@@ -31,7 +31,6 @@ public class DontDestroyPlayer : MonoBehaviour
         {
             Destroy(gameObject);
             persistentObjects[index].SetActive(true);
-            persistentObjects[index].GetComponent<PlayerController>().Start();
         }
     }
 }

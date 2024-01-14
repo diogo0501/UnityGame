@@ -12,7 +12,7 @@ public class EndGame : MonoBehaviour
     void Start()
     {
         DeathMenu = GameObject.FindGameObjectWithTag("Death");
-        slimes = GameObject.FindGameObjectsWithTag("Enemy");
+        slimes    = GameObject.FindGameObjectsWithTag("Enemy");
         foreach (var s in slimes)
         {
             s.GetComponent<SlimeMovement>().DeathMenu = DeathMenu;
