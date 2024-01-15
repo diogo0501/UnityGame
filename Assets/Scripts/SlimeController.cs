@@ -15,34 +15,24 @@ public class SlimeMovement : MonoBehaviour
     public  float DIFFICULTY              = 1.3f;
     private int   POINTS_LIMIT            = 20;
     private bool  alreadyTriggered        = false;
-    private bool  created                 = false;
-    // Reference to the object to be removed
-    //public GameObject _ownObj;
 
-    public float            fovAngle = 90f;
-    public float            detectionRadius = 10f;
-    public LayerMask        playerLayer;
-    public LayerMask        testLayer;
-    public PlayerController _player;
-    private Vector2         initialPosition;
-    private int             points = 0;
-    public GameObject DeathMenu;
-    private GameObject Canvas;
+    public  float            fovAngle         = 90f;
+    public  float            detectionRadius  = 10f;
+    public  LayerMask        playerLayer;
+    public  LayerMask        testLayer;
+    public  PlayerController _player;
+    public  GameObject       DeathMenu;
+    private GameObject       Canvas;
+    private Vector2          initialPosition;
+    private int              points           = 0;
 
-    private float timeSinceLastDirectionChange;
-    private Vector2 currentDirection;
-    public Transform fieldOfViewPrefab;
+    public  Transform   fieldOfViewPrefab;
     private FieldOfView fieldOfViewInstance;
+    private float       timeSinceLastDirectionChange;
+    private Vector2     currentDirection;
 
     private void Start()
     {
-        //DeathMenu = GameObject.FindGameObjectWithTag("Death");
-        //if(DeathMenu == null) { Debug.Log("[INFO] Death Menu is null"); };
-        //if(DeathMenu != null)
-        //{
-        //    DeathMenu.SetActive(false);
-        //    Debug.Log("Falsseeeeee");
-        //}
         setPlayer();
         initialPosition = transform.position;
         ChooseRandomDirection(); // Set initial random direction
@@ -117,7 +107,8 @@ public class SlimeMovement : MonoBehaviour
     private void ChooseRandomDirection()
     {
         float randomAngle = Random.Range(0f, 360f);
-        currentDirection = new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), Mathf.Sin(randomAngle * Mathf.Deg2Rad));
+        currentDirection = new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), 
+                                       Mathf.Sin(randomAngle * Mathf.Deg2Rad));
     }
 
     private void ClampPositionToBoundary()
@@ -159,10 +150,6 @@ public class SlimeMovement : MonoBehaviour
                 Destroy(obj);
                 //Debug.Log(obj.name + " destroyed!");
             }
-
-            //player.GetComponent<PlayerController>().walkingPoints = 100;
-            //player.GetComponent<Transform>().position = new Vector3(-8, -7, 0);
-            //SceneManager.LoadSceneAsync(1);
 
         }
     }

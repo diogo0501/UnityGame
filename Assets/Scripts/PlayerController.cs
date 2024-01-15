@@ -18,33 +18,35 @@ public class PlayerController : MonoBehaviour
 
     private SlimeMovement[] slimeObjs;
     private Transform[]     slimeTrans;
+    private SpriteRenderer  spriteRenderer;
 
     public Transform playerTrans;
 
-    private static bool created = false;
-    public  int       walkingPoints;
-    public  float     movementCooldown = 0.5f;
-    private float     lastMovementTime;
-    public  UIManager uiManager;
-    private Transform walkingPointsTransform;
+    public  int         walkingPoints;
+    public  float       movementCooldown = 0.5f;
+    private float       lastMovementTime;
+    public  UIManager   uiManager;
+    private Transform   walkingPointsTransform;
+
     private void Start()
     {
         setSlimeObjectsAndTrans();
-        playerTrans = GameObject.FindGameObjectWithTag("Player")
-                                .GetComponent<Transform>();
 
-        _playerRigidbody2D = GetComponent<Rigidbody2D>();
-        _player_Animator = GetComponent<Animator>();
-        walkingPoints = 100;
+        playerTrans            = GameObject.FindGameObjectWithTag("Player")
+                                .GetComponent<Transform>();
+        _playerRigidbody2D     = GetComponent<Rigidbody2D>();
+        _player_Animator       = GetComponent<Animator>();
+        walkingPoints          = 100;
         walkingPointsTransform = transform.Find("WalkingPoints");
-        uiManager = FindObjectOfType<UIManager>();
+        uiManager              = FindObjectOfType<UIManager>();
+        spriteRenderer         = GetComponent<SpriteRenderer>();
     }
 
     private void setSlimeObjectsAndTrans()
     {
         GameObject[] slimes = GameObject.FindGameObjectsWithTag("Enemy");
-        slimeObjs = new SlimeMovement[slimes.Length];
-        slimeTrans = new Transform[slimes.Length];
+        slimeObjs           = new SlimeMovement[slimes.Length];
+        slimeTrans          = new Transform[slimes.Length];
 
         int i = 0;
         foreach(var slime in slimes)
@@ -58,14 +60,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _playerDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        _playerDirection = new Vector2(Input.GetAxisRaw("Horizontal"), 
+                                       Input.GetAxisRaw("Vertical")).normalized;
         Debug.Log(_playerDirection.x);
 
         if(_playerDirection.sqrMagnitude > 0 )
         {
             _player_Animator.SetInteger("Movement", 1);
             FlipMovement();
-            //Debug.Log("Walking Points: " + walkingPoints);
             walkingPointsTransform.position = transform.position;
         }
         else
@@ -82,7 +84,6 @@ public class PlayerController : MonoBehaviour
         setSlimeObjectsAndTrans();
         playerTrans = GameObject.FindGameObjectWithTag("Player")
                                 .GetComponent<Transform>();
-
     }
 
     public void AddPoints(int points)
@@ -122,9 +123,6 @@ public class PlayerController : MonoBehaviour
             {
                 //POF
                 kvp.Key.AddPoint();
-
-                //Debug.Log(kvp.Key + " points : " + kvp.Key.GetPoints());
-
             }
         }
 
@@ -154,17 +152,9 @@ public class PlayerController : MonoBehaviour
     {      
         walkingPoints--;
         checkCloserEnemy();
-
     }
     void FlipMovement()
     {
-        if(_playerDirection.x > 0)
-        {
-            transform.eulerAngles = new Vector3(1f, 1f, 1f);
-        }
-        else if(_playerDirection.x < 0)
-        {
-            transform.eulerAngles = new Vector3(-1f, 1f, 1f);
-        }
+        spriteRenderer.flipX = _playerDirection.x < 0;
     }
 }

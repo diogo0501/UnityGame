@@ -7,23 +7,25 @@ using System;
 public class UISlimeManager : MonoBehaviour
 {
     public TextMeshProUGUI slimePointsText;
-    public SlimeMovement slimeController;
+    public SlimeMovement   slimeController;
+
+    private int LIMIT_POINTS = 20;
 
     void Start()
     {
         try
         {
-            slimePointsText.text = "Points: " + slimeController.GetPoints();
+            slimePointsText.text = slimeController.GetPoints() + "/" + LIMIT_POINTS;
         }
-        catch (NullReferenceException e) { }
+        catch (NullReferenceException e) { _ = e; }
     }
 
     void Update()
     {
         try
         {
-            slimePointsText.text = "Points: " + slimeController.GetPoints();
+            slimePointsText.text = slimeController.GetPoints() + "/" + LIMIT_POINTS;
         }
-        catch(NullReferenceException e) { }
+        catch(NullReferenceException e) { _ = e; }
     }
 }
