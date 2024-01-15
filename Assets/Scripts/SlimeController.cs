@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
 public class SlimeMovement : MonoBehaviour
@@ -153,10 +154,36 @@ public class SlimeMovement : MonoBehaviour
                 Destroy(slime);
             }
 
+            foreach (var obj in GetDontDestroyOnLoadObjects())
+            {
+                Destroy(obj);
+                //Debug.Log(obj.name + " destroyed!");
+            }
+
             //player.GetComponent<PlayerController>().walkingPoints = 100;
             //player.GetComponent<Transform>().position = new Vector3(-8, -7, 0);
             //SceneManager.LoadSceneAsync(1);
 
+        }
+    }
+
+    public static GameObject[] GetDontDestroyOnLoadObjects()
+    {
+        GameObject temp = null;
+        try
+        {
+            temp = new GameObject();
+            Object.DontDestroyOnLoad(temp);
+            UnityEngine.SceneManagement.Scene dontDestroyOnLoad = temp.scene;
+            Object.DestroyImmediate(temp);
+            temp = null;
+
+            return dontDestroyOnLoad.GetRootGameObjects();
+        }
+        finally
+        {
+            if (temp != null)
+                Object.DestroyImmediate(temp);
         }
     }
 }

@@ -16,17 +16,10 @@ public class PlayerController : MonoBehaviour
     private Vector2     _playerDirection;
     private Animator    _player_Animator;
 
-    public SlimeMovement[] slimeObjs;
-    public Transform[]     slimeTrans;
-
-    //public SlimeMovement _slimeObj;
-    //public SlimeMovement _slime1Obj;
-    //public SlimeMovement _slime2Obj;
+    private SlimeMovement[] slimeObjs;
+    private Transform[]     slimeTrans;
 
     public Transform playerTrans;
-    //public Transform _slimeTrans;
-    //public Transform _slime1Trans;
-    //public Transform _slime2Trans;
 
     private static bool created = false;
     public  int       walkingPoints;
@@ -36,17 +29,6 @@ public class PlayerController : MonoBehaviour
     private Transform walkingPointsTransform;
     private void Start()
     {
-
-        //if (!created)
-        //{
-        //    DontDestroyOnLoad(transform.gameObject);
-        //    created = true;
-        //}
-        //else
-        //{
-        //    Destroy(gameObject);
-        //}
-
         setSlimeObjectsAndTrans();
         playerTrans = GameObject.FindGameObjectWithTag("Player")
                                 .GetComponent<Transform>();
@@ -56,7 +38,6 @@ public class PlayerController : MonoBehaviour
         walkingPoints = 100;
         walkingPointsTransform = transform.Find("WalkingPoints");
         uiManager = FindObjectOfType<UIManager>();
-        //Debug.Log("Walking Points: " + walkingPoints);
     }
 
     private void setSlimeObjectsAndTrans()
@@ -72,14 +53,13 @@ public class PlayerController : MonoBehaviour
             slimeTrans[i] = slime.GetComponent<Transform>();
             i++;
         }
-
-
     }
 
     // Update is called once per frame
     void Update()
     {
         _playerDirection = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        Debug.Log(_playerDirection.x);
 
         if(_playerDirection.sqrMagnitude > 0 )
         {
@@ -90,6 +70,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            //FlipMovement();
             _player_Animator.SetInteger("Movement", 0);
         }
         if (walkingPoints <= 0)
@@ -159,7 +140,8 @@ public class PlayerController : MonoBehaviour
                 lastMovementTime = Time.time;
 
             }
-            _playerRigidbody2D.MovePosition(_playerRigidbody2D.position + _playerDirection * _playerSpeed * Time.fixedDeltaTime);
+            _playerRigidbody2D.MovePosition(_playerRigidbody2D.position + _playerDirection 
+                                            * _playerSpeed * Time.fixedDeltaTime);
         }
            
     }
