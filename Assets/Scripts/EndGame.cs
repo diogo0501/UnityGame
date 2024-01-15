@@ -33,8 +33,10 @@ public class EndGame : MonoBehaviour
     {
         foreach(var obj in GetDontDestroyOnLoadObjects())
         {
-            Destroy(obj);
-            Debug.Log(obj.name + " destroyed!");
+            if (!obj.tag.Equals("audio"))
+            {
+                Destroy(obj);
+            }
         }
         SceneManager.LoadSceneAsync(1);
 

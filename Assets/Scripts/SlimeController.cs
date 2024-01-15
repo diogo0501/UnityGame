@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 
 public class SlimeMovement : MonoBehaviour
 {
+    public int state;
     public  float moveSpeed               = 2f;
     public  float changeDirectionInterval = 2f;
     public  float boundaryRadius          = 2f;
@@ -62,7 +63,7 @@ public class SlimeMovement : MonoBehaviour
         fieldOfViewInstance.SetViewDistance(detectionRadius);
     }
 
-    private void CheckPoints()
+   /* private void CheckPoints()
     {
         if (points >= POINTS_LIMIT)
         {
@@ -75,6 +76,36 @@ public class SlimeMovement : MonoBehaviour
                 alreadyTriggered = true;
             }
             //Destroy(_ownObj);
+        }
+
+    }*/
+   private void CheckPoints() 
+    { 
+        if (points >= POINTS_LIMIT)
+        {
+            _player.AddPoints(points);
+            points = 0;
+
+            switch (state)
+            {
+                case 1:
+                    fovAngle *= DIFFICULTY;
+                    fieldOfViewInstance.SetFoV(fovAngle);
+                    break;
+
+                case 2:
+
+                    moveSpeed *= DIFFICULTY;
+                    break;
+
+                case 3:
+
+                    detectionRadius *= DIFFICULTY;
+                    fieldOfViewInstance.SetViewDistance(detectionRadius);
+                    break;
+
+
+            }
         }
 
     }
@@ -147,7 +178,11 @@ public class SlimeMovement : MonoBehaviour
 
             foreach (var obj in GetDontDestroyOnLoadObjects())
             {
-                Destroy(obj);
+                if (!obj.tag.Equals("audio"))
+                {
+                    Destroy(obj);
+                }
+                
                 //Debug.Log(obj.name + " destroyed!");
             }
 
