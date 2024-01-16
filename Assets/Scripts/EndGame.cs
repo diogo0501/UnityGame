@@ -42,6 +42,11 @@ public class EndGame : MonoBehaviour
 
     }
 
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
     public static GameObject[] GetDontDestroyOnLoadObjects()
     {
         GameObject temp = null;
