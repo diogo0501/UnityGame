@@ -31,6 +31,8 @@ public class SlimeMovement : MonoBehaviour
     private FieldOfView fieldOfViewInstance;
     private float       timeSinceLastDirectionChange;
     private Vector2     currentDirection;
+    private Vector2 targetDirection;
+    private float turnSpeed = 1.5f;
 
     private void Start()
     {
@@ -48,6 +50,7 @@ public class SlimeMovement : MonoBehaviour
     private void Update()
     {
         Move();
+        currentDirection = Vector2.Lerp(currentDirection, targetDirection, turnSpeed * Time.deltaTime);
         CheckDirectionChangeTimer();
         ClampPositionToBoundary();
         CheckPlayerDetection();
@@ -86,25 +89,31 @@ public class SlimeMovement : MonoBehaviour
             _player.AddPoints(points);
             points = 0;
 
-            switch (state)
+            if (!alreadyTriggered)
             {
-                case 1:
-                    fovAngle *= DIFFICULTY;
-                    fieldOfViewInstance.SetFoV(fovAngle);
-                    break;
+                switch (state)
+                {
+                    case 1:
+                        fovAngle *= DIFFICULTY;
+                        fieldOfViewInstance.SetFoV(fovAngle);
+                        alreadyTriggered = true;
+                        break;
 
-                case 2:
+                    case 2:
 
-                    moveSpeed *= DIFFICULTY;
-                    break;
+                        moveSpeed *= DIFFICULTY;
+                        alreadyTriggered = true;
+                        break;
 
-                case 3:
+                    case 3:
 
-                    detectionRadius *= DIFFICULTY;
-                    fieldOfViewInstance.SetViewDistance(detectionRadius);
-                    break;
+                        detectionRadius *= DIFFICULTY;
+                        fieldOfViewInstance.SetViewDistance(detectionRadius);
+                        alreadyTriggered = true;
+                        break;
 
 
+                }
             }
         }
 
@@ -138,7 +147,7 @@ public class SlimeMovement : MonoBehaviour
     private void ChooseRandomDirection()
     {
         float randomAngle = Random.Range(0f, 360f);
-        currentDirection = new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), 
+        targetDirection = new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), 
                                        Mathf.Sin(randomAngle * Mathf.Deg2Rad));
     }
 
@@ -175,7 +184,7 @@ public class SlimeMovement : MonoBehaviour
     {
         Time.timeScale = 0f;
         // Wait for 1 second
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitForSecondsRealtime(0.3f);
 
         Time.timeScale = 1f;
 

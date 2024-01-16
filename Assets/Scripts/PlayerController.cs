@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     public Transform playerTrans;
 
     public  int         walkingPoints;
-    public  float       movementCooldown = 0.5f;
+    public  float       movementCooldown = 0.1f;
     private float       lastMovementTime;
     public  UIManager   uiManager;
     private Transform   walkingPointsTransform;

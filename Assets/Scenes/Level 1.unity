@@ -13325,7 +13325,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 1
-  moveSpeed: 3
+  moveSpeed: 2
   changeDirectionInterval: 2
   boundaryRadius: 3
   DIFFICULTY: 1.3
