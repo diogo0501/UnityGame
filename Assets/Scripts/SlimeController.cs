@@ -167,29 +167,41 @@ public class SlimeMovement : MonoBehaviour
         {
             // Player detected
             Debug.Log("Player detected");
-            DeathMenu.SetActive(true);
-            GameObject[] slimes = GameObject.FindGameObjectsWithTag("Enemy");
-            GameObject player   = GameObject.FindGameObjectWithTag("Player");
-
-            foreach (var slime in slimes)
-            {
-                Destroy(slime);
-            }
-
-            foreach (var obj in GetDontDestroyOnLoadObjects())
-            {
-                if (!obj.tag.Equals("audio"))
-                {
-                    Destroy(obj);
-                }
-                
-                //Debug.Log(obj.name + " destroyed!");
-            }
-
+            StartCoroutine(ActivateDeathMenuAfterDelay());
         }
     }
 
-    public static GameObject[] GetDontDestroyOnLoadObjects()
+    private IEnumerator ActivateDeathMenuAfterDelay()
+    {
+        // Wait for 1 second
+        yield return new WaitForSeconds(0.5f);
+
+        // Activate the death menu
+        DeathMenu.SetActive(true);
+
+        // Destroy slimes
+        GameObject[] slimes = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (var slime in slimes)
+        {
+            Destroy(slime);
+        }
+
+        // Destroy other objects, except those tagged 'audio'
+        foreach (var obj in GetDontDestroyOnLoadObjects())
+        {
+            if (!obj.tag.Equals("audio"))
+            {
+                Destroy(obj);
+            }
+            // Uncomment if you want to log the destruction
+            // Debug.Log(obj.name + " destroyed!");
+        }
+    }
+
+    // Rest of your class code, including GetDontDestroyOnLoadObjects and other methods
+
+
+public static GameObject[] GetDontDestroyOnLoadObjects()
     {
         GameObject temp = null;
         try
