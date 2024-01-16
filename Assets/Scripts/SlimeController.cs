@@ -173,8 +173,11 @@ public class SlimeMovement : MonoBehaviour
 
     private IEnumerator ActivateDeathMenuAfterDelay()
     {
+        Time.timeScale = 0f;
         // Wait for 1 second
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSecondsRealtime(0.5f);
+
+        Time.timeScale = 1f;
 
         // Activate the death menu
         DeathMenu.SetActive(true);
