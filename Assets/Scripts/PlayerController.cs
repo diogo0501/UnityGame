@@ -6,6 +6,8 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Object = UnityEngine.Object;
+
 
 
 public class PlayerController : MonoBehaviour
@@ -20,7 +22,8 @@ public class PlayerController : MonoBehaviour
     private Transform[]     slimeTrans;
     private SpriteRenderer  spriteRenderer;
 
-    public Transform playerTrans;
+    public Transform  playerTrans;
+    public GameObject DeathMenu;
 
     public  int         walkingPoints;
     public  float       movementCooldown = 0.1f;
@@ -77,7 +80,8 @@ public class PlayerController : MonoBehaviour
         }
         if (walkingPoints <= 0)
         {
-            RestartScene();
+            StartCoroutine(ActivateDeathMenuAfterDelay());
+            //RestartScene();
         }
 
         // TO BE REMOVED
@@ -157,4 +161,55 @@ public class PlayerController : MonoBehaviour
     {
         spriteRenderer.flipX = _playerDirection.x < 0;
     }
+
+    private IEnumerator ActivateDeathMenuAfterDelay()
+    {
+        Time.timeScale = 0f;
+        // Wait for 1 second
+        yield return new WaitForSecondsRealtime(0.3f);
+
+        Time.timeScale = 1f;
+
+        // Activate the death menu
+        DeathMenu.SetActive(true);
+
+        // Destroy slimes
+        GameObject[] slimes = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (var slime in slimes)
+        {
+            Destroy(slime);
+        }
+
+        // Destroy other objects, except those tagged 'audio'
+        foreach (var obj in GetDontDestroyOnLoadObjects())
+        {
+            if (!obj.tag.Equals("audio"))
+            {
+                Destroy(obj);
+            }
+            // Uncomment if you want to log the destruction
+            // Debug.Log(obj.name + " destroyed!");
+        }
+    }
+
+    public static GameObject[] GetDontDestroyOnLoadObjects()
+    {
+        GameObject temp = null;
+        try
+        {
+            temp = new GameObject();
+            Object.DontDestroyOnLoad(temp);
+            UnityEngine.SceneManagement.Scene dontDestroyOnLoad = temp.scene;
+            Object.DestroyImmediate(temp);
+            temp = null;
+
+            return dontDestroyOnLoad.GetRootGameObjects();
+        }
+        finally
+        {
+            if (temp != null)
+                Object.DestroyImmediate(temp);
+        }
+    }
 }
+

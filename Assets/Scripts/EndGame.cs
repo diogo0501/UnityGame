@@ -7,16 +7,21 @@ public class EndGame : MonoBehaviour
 {
     public GameObject DeathMenu;
     private GameObject[] slimes;
+    private GameObject player;
 
     // Start is called before the first frame update
     void Start()
     {
         DeathMenu = GameObject.FindGameObjectWithTag("Death");
         slimes    = GameObject.FindGameObjectsWithTag("Enemy");
+        player    = GameObject.FindGameObjectWithTag("Player");
+
         foreach (var s in slimes)
         {
             s.GetComponent<SlimeMovement>().DeathMenu = DeathMenu;
         }
+
+        player.GetComponent<PlayerController>().DeathMenu = DeathMenu;
         DeathMenu.SetActive(false);
     }
 
